@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện Lớp Học</title>
+    <link rel="icon" type="image/x-icon" href="conchim.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 32px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+        }
+
+        .section:hover h2::after {
+            width: 100%;
+        }
+
+        /* Book Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .book-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            transition: left 0.4s ease;
+        }
+
+        .book-card:hover::before {
+            left: 0;
+        }
+
+        .book-card:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .book-card-content {
+            flex: 1;
+        }
+
+        .book-card-image {
+            width: 80px;
+            height: 110px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .book-card:hover .book-card-image {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .book-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .available {
+            background: #4caf50;
+            color: white;
+        }
+
+        .borrowed {
+            background: #ff9800;
+            color: white;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Rules */
+        .rules-list {
+            list-style: none;
+            counter-reset: rule-counter;
+        }
+
+        .rules-list li {
+            counter-increment: rule-counter;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            position: relative;
+            padding-left: 60px;
+            transition: all 0.3s ease;
+        }
+
+        .rules-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .rules-list li::before {
+            content: counter(rule-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            animation: slideIn 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #667eea;
+            transform: rotate(90deg);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 50px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        footer .footer-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        footer .footer-title i {
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+        footer .footer-slogan {
+            font-size: 15px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        footer .footer-contact {
+            font-size: 14px;
+            color: #555;
+        }
+
+        footer .footer-contact i {
+            color: #667eea;
+            margin: 0 5px;
+        }
+
+        .social-links {
+            margin: 25px 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        footer .footer-copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #999;
+        }
+
+        footer .footer-copyright i {
+            margin-right: 5px;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo"><i class="fas fa-book-open"></i> Thư Viện Lớp Học</div>
+            <nav>
+                <ul>
+                    <li><a href="#books"><i class="fas fa-books"></i> Danh Mục Sách</a></li>
+                    <li><a href="#suggest"><i class="fas fa-lightbulb"></i> Đề Xuất Sách</a></li>
+                    <li><a href="#rules"><i class="fas fa-clipboard-list"></i> Nội Quy</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Danh Mục Sách -->
+        <section id="books" class="section">
+            <h2><i class="fas fa-book"></i> Danh Mục Sách</h2>
+            <div class="book-grid">
+                <div class="book-card" onclick="showBookDetails('Đắc Nhân Tâm', 'Dale Carnegie', 'Kỹ năng sống', 'available')">
+                    <div class="book-card-content">
+                        <h3>Đắc Nhân Tâm</h3>
+                        <p><strong>Tác giả:</strong> Dale Carnegie</p>
+                        <p><strong>Thể loại:</strong> Kỹ năng sống</p>
+                        <span class="book-status available">Còn sách</span>
+                    </div>
+                    <img src="dacnhantam.jpg" alt="Đắc Nhân Tâm" class="book-card-image">
+                </div>
+
+                <div class="book-card" onclick="showBookDetails('Nhà Giả Kim', 'Paulo Coelho', 'Tiểu thuyết', 'borrowed')">
+                    <div class="book-card-content">
+                        <h3>Nhà Giả Kim</h3>
+                        <p><strong>Tác giả:</strong> Paulo Coelho</p>
+                        <p><strong>Thể loại:</strong> Tiểu thuyết</p>
+                        <span class="book-status borrowed">Đang mượn</span>
+                    </div>
+                    <img src="nhagiakim.jpg" alt="Nhà Giả Kim" class="book-card-image">
+                </div>
+
+                <div class="book-card" onclick="showBookDetails('Sapiens', 'Yuval Noah Harari', 'Lịch sử', 'available')">
+                    <div class="book-card-content">
+                        <h3>Sapiens</h3>
+                        <p><strong>Tác giả:</strong> Yuval Noah Harari</p>
+                        <p><strong>Thể loại:</strong> Lịch sử</p>
+                        <span class="book-status available">Còn sách</span>
+                    </div>
+                    <img src="sapiens.jpg" alt="Sapiens" class="book-card-image">
+                </div>
+
+                <div class="book-card" onclick="showBookDetails('Tuổi Trẻ Đáng Giá Bao Nhiêu', 'Rosie Nguyễn', 'Kỹ năng sống', 'available')">
+                    <div class="book-card-content">
+                        <h3>Tuổi Trẻ Đáng Giá Bao Nhiêu</h3>
+                        <p><strong>Tác giả:</strong> Rosie Nguyễn</p>
+                        <p><strong>Thể loại:</strong> Kỹ năng sống</p>
+                        <span class="book-status available">Còn sách</span>
+                    </div>
+                    <img src="tuoitredanggiabaonhieu.jpg" alt="Tuổi Trẻ Đáng Giá Bao Nhiêu" class="book-card-image">
+                </div>
+
+                <div class="book-card" onclick="showBookDetails('Nghệ Thuật Tinh Tế Của Việc Đếch Quan Tâm', 'Mark Manson', 'Kỹ năng sống', 'borrowed')">
+                    <div class="book-card-content">
+                        <h3>Nghệ Thuật Tinh Tế Của Việc Đếch Quan Tâm</h3>
+                        <p><strong>Tác giả:</strong> Mark Manson</p>
+                        <p><strong>Thể loại:</strong> Kỹ năng sống</p>
+                        <span class="book-status borrowed">Đang mượn</span>
+                    </div>
+                    <img src="nghethuattinhtecuaviecdechquantam.jpg" alt="Nghệ Thuật Tinh Tế" class="book-card-image">
+                </div>
+
+                <div class="book-card" onclick="showBookDetails('Tôi Thấy Hoa Vàng Trên Cỏ Xanh', 'Nguyễn Nhật Ánh', 'Văn học', 'available')">
+                    <div class="book-card-content">
+                        <h3>Tôi Thấy Hoa Vàng Trên Cỏ Xanh</h3>
+                        <p><strong>Tác giả:</strong> Nguyễn Nhật Ánh</p>
+                        <p><strong>Thể loại:</strong> Văn học</p>
+                        <span class="book-status available">Còn sách</span>
+                    </div>
+                    <img src="toithayhoavangtrencoxanh.webp" alt="Tôi Thấy Hoa Vàng Trên Cỏ Xanh" class="book-card-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Đề Xuất Sách -->
+        <section id="suggest" class="section">
+            <h2><i class="fas fa-lightbulb"></i> Đề Xuất Sách Mới</h2>
+            <form id="suggestForm">
+                <div class="form-group">
+                    <label for="bookTitle">Tên Sách:</label>
+                    <input type="text" id="bookTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookAuthor">Tác Giả:</label>
+                    <input type="text" id="bookAuthor" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookCategory">Thể Loại:</label>
+                    <select id="bookCategory" required>
+                        <option value="">Chọn thể loại</option>
+                        <option value="van-hoc">Văn học</option>
+                        <option value="ky-nang">Kỹ năng sống</option>
+                        <option value="lich-su">Lịch sử</option>
+                        <option value="khoa-hoc">Khoa học</option>
+                        <option value="tieu-thuyet">Tiểu thuyết</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookReason">Lý Do Đề Xuất:</label>
+                    <textarea id="bookReason" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentName">Họ và Tên:</label>
+                    <input type="text" id="studentName" required>
+                </div>
+
+                <button type="submit"><i class="fas fa-paper-plane"></i> Gửi Đề Xuất</button>
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Đề xuất của bạn đã được gửi thành công!
+                </div>
+            </form>
+        </section>
+
+        <!-- Nội Quy Thư Viện -->
+        <section id="rules" class="section">
+            <h2><i class="fas fa-clipboard-list"></i> Nội Quy Thư Viện Lớp</h2>
+            <ul class="rules-list">
+                <li>Mỗi bạn được mượn tối đa 2 cuốn sách cùng lúc</li>
+                <li>Thời gian mượn sách là 14 ngày, có thể gia hạn thêm 7 ngày nếu không có bạn nào đặt trước</li>
+                <li>Giữ gìn sách sạch sẽ, không viết vẽ, gấp góc hoặc làm hỏng sách</li>
+                <li>Trả sách đúng hạn. Nếu trả muộn sẽ bị phạt không được mượn sách trong 1 tuần</li>
+                <li>Nếu làm mất hoặc hỏng sách, bạn cần bồi thường bằng sách mới cùng loại hoặc giá trị tương đương</li>
+                <li>Giữ trật tự và im lặng khi đến thư viện lớp</li>
+                <li>Đăng ký mượn sách với thủ thư lớp và ghi đầy đủ thông tin vào sổ mượn sách</li>
+                <li>Tôn trọng và chấp hành sự hướng dẫn của thủ thư lớp</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Modal Chi Tiết Sách -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p><strong>Tác giả:</strong> <span id="modalAuthor"></span></p>
+            <p><strong>Thể loại:</strong> <span id="modalCategory"></span></p>
+            <p><strong>Trạng thái:</strong> <span id="modalStatus"></span></p>
+            <p style="margin-top: 20px;">Đây là một cuốn sách tuyệt vời trong bộ sưu tập thư viện lớp chúng ta. Hãy liên hệ với thủ thư lớp để mượn sách nhé!</p>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-title"><i class="fas fa-book-reader"></i><strong>Thư Viện Lớp Học</strong></p>
+        <p class="footer-slogan">Đọc sách mỗi ngày - Tri thức mãi mãi</p>
+        <p class="footer-contact">
+            <i class="fas fa-envelope"></i> thuvienlop12t1@school.edu.vn
+            <span style="margin: 0 10px;">|</span>
+            <i class="fas fa-phone"></i> 0774152783
+        </p>
+        <div class="social-links">
+            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="footer-copyright">
+            <i class="far fa-copyright"></i> 2025 Thư Viện Lớp Học. Tất cả quyền được bảo lưu.
+        </p>
+    </footer>
+
+    <script>
+        // Hiển thị chi tiết sách
+        function showBookDetails(title, author, category, status) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalAuthor').textContent = author;
+            document.getElementById('modalCategory').textContent = category;
+            document.getElementById('modalStatus').textContent = status === 'available' ? 'Còn sách' : 'Đang được mượn';
+            document.getElementById('bookModal').style.display = 'block';
+        }
+
+        // Đóng modal
+        function closeModal() {
+            document.getElementById('bookModal').style.display = 'none';
+        }
+
+        // Đóng modal khi click bên ngoài
+        window.onclick = function(e) {
+            const modal = document.getElementById('bookModal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Xử lý form đề xuất
+        document.getElementById('suggestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+                this.reset();
+            }, 3000);
+        });
+
+        // Smooth scroll cho navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
